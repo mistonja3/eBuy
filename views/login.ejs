@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header') %>
+
+    <body>
+        <%- include('nav')%>
+
+            <form method="post" action="/login">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password">
+                <button type="submit">Log In</button>
+            </form>
+            <a href="/register">Register</a>
+
+            <%- include('footer') %>
+
+    </body>
+
+</html>

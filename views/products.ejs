@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header') %>
+
+    <body>
+        <%- include('nav')%>
+
+            <div class="container is-large all-products">
+                <div class="all-products-top">
+                    <!-- <div class="column"> -->
+                    <h2>Browse All Products</h2>
+                    <!-- </div> -->
+                    <!-- <div class="column"> -->
+                    <select class="products-filter">
+                        <option>Sort by</option>
+                        <option>Price (High - Low)</option>
+                        <option>Price (Low - High)</option>
+                        <option>Alphabetic Order (A - Z)</option>
+                        <option>Alphabetic Order (Z - A)</option>
+
+                    </select>
+                    <!-- </div> -->
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="img-container ">
+                            <img src="/assets/media/adidasjacket.jpg " alt="addidas jacket ">
+                        </div>
+                        <h3>ESSENTIALS DOWN JACKET</h3>
+                        <p>$90</p>
+                    </div>
+
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/top1.jpg " alt="addidas mens top ">
+                        </div>
+                        <h3>RUN ICON LS</h3>
+                        <p>$50</p>
+                    </div>
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/shoe2.jpg " alt="addidas shoes ">
+                        </div>
+                        <h3>ULTRABOOST 22 SHOES</h3>
+                        <p>$190</p>
+                    </div>
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/pants1.jpg " alt="addidas pants ">
+                        </div>
+                        <h3>FLEECE 3-STRIPES PANTS</h3>
+                        <p>$32</p>
+                    </div>
+                </div>
+                <div class="columns ">
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/shoe1.jpg " alt="addidas shoes ">
+                        </div>
+                        <h3>LITE RACER ADAPT 3 SHOES</h3>
+                        <p>$65</p>
+                    </div>
+
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/sweater.jpg " alt="addidas sweater ">
+                        </div>
+                        <h3>VELOUR SWEATER</h3>
+                        <p>$35</p>
+                    </div>
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/fleece.jpg " alt="addidas fleece ">
+                        </div>
+                        <h3>FLEECE SWEATSHIRT</h3>
+                        <p>$50</p>
+                    </div>
+                    <div class="column ">
+                        <div class="img-container ">
+                            <img src="/assets/media/shoe3.jpg " alt="addidas shoes ">
+                        </div>
+                        <h3>RACER TR21 K</h3>
+                        <p>$60</p>
+                    </div>
+                </div>
+                <div class="pagination">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                </div>
+            </div>
+            <%- include('footer') %>
+
+    </body>
+
+</html>
