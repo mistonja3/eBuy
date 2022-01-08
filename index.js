@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000
 const cookieParser = require('cookie-parser')
 const http = require('http')
 const reload = require('reload')
-const bcrypt = require('bcrypt')
 
 const dotenv = require('dotenv')
 dotenv.config({ path: "./.env" })
