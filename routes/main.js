@@ -27,15 +27,50 @@ module.exports = function(app) {
         res.render("register", { title: 'eBuy - Register' })
     })
     app.post("/register", (req, res) => {
-        // try{
-        //     const hashedPass = bcrypt.hash(res.body.password, 10)
-        //     users.push
-        // }
-        // catch{
 
-        // }
+            const { name, email, username, password } = req.body;
 
-        // res.send(req.body.username)
-    })
+            db.query('SELECT email FROM users WHERE email = ?', [email], async(err, result) => {
+                if (err) {
+                    console.log(err)
+                } else if (result.length > 0) {
+                    req.session.message = {
+                        type: 'error',
+                        message: 'Email is already in use!'
+                    }
+                    res.redirect('register')
+                } else {
+                    let encryptedPassword = await bcrypt.hash(password, 10);
 
+                    console.log(encryptedPassword)
+                    req.session.message = {
+                        type: 'success',
+                        message: 'Successfully registered an account!'
+                    }
+                    res.redirect('login')
+                }
+            })
+        })
+        // app.post("/login", (req, res) => {
+
+    //     const { name, email, username, password } = req.body;
+
+    //     db.query('SELECT email FROM users WHERE email = ?', [email], (err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //         } else if (result.length > 0) {
+    //             req.session.message = {
+    //                 type: 'error',
+    //                 message: 'Email is already in use!'
+    //             }
+    //             res.redirect('register')
+    //         } else {
+    //             req.session.message = {
+    //                 type: 'success',
+    //                 message: 'Successfully registered an account!'
+    //             }
+    //             res.redirect('login')
+    //         }
+    //     })
+    // })
 }

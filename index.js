@@ -3,14 +3,32 @@ const app = express()
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const port = process.env.PORT || 3000
-const cookieParser = require('cookie-parser')
 const http = require('http')
 const reload = require('reload')
+
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+
+const bcrypt = require('bcryptjs')
 
 const dotenv = require('dotenv')
 dotenv.config({ path: "./.env" })
 
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(cookieParser('secret'));
+app.use(session({
+    secret: 'secret',
+    cookie: { maxAge: null },
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(function(req, res, next) {
+    res.locals.message = req.session.message;
+    delete req.session.message;
+    next();
+})
+
 
 const db = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -29,8 +47,9 @@ db.getConnection((err) => {
         console.log("Connected to database");
     }
 });
-global.db = db
 
+global.db = db
+global.bcrypt = bcrypt
 
 app.set('view engine', 'ejs')
 require("./routes/main")(app);
