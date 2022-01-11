@@ -1,11 +1,27 @@
 const bcrypt = require("bcryptjs/dist/bcrypt")
+const req = require("express/lib/request")
 
 module.exports = function(app) {
     app.get("/", (req, res) => {
         res.render("index", { title: 'eBuy - Home Page' })
     })
     app.get("/products", (req, res) => {
-        res.render("products", { title: 'eBuy - Products' })
+        db.query('SELECT * FROM products', (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                if (result.length == 0) {
+                    req.session.message = {
+                        type: 'error',
+                        message: "Sorry, there are currently no available products."
+                    }
+                    res.redirect('index');
+                } else {
+                    res.render("products", { title: 'eBuy - Products', availableProducts: result })
+                }
+            }
+        })
+
     })
     app.get("/about", (req, res) => {
         res.render("about", { title: 'eBuy - About' })
@@ -17,10 +33,76 @@ module.exports = function(app) {
         res.render("account", { title: 'eBuy - Account' })
     })
     app.get("/cart", (req, res) => {
-        res.render("cart", { title: 'eBuy - Shooping Cart' })
+        db.query("SELECT * FROM products WHERE id = 213", (err, result) => {
+            if (err) {
+                console.log(err)
+            } else if (result.length == 0) {
+                res.render("cart", { title: 'eBuy - Shooping Cart', product: result[0] })
+
+            } else if (result.length != 0) {
+                res.render("cart", { title: 'eBuy - Shooping Cart', product: result[0] })
+            }
+
+        })
     })
     app.get("/products-details", (req, res) => {
-        res.render("products-details", { title: 'eBuy - Product Name' })
+        db.query('SELECT * FROM products WHERE id = ?', req.query.id, (err, result) => {
+            if (err) {
+                console.log(err)
+            } else if (result.length != 0) {
+                // req.session.message = {
+                //     type: 'success',
+                //     message: 'Successfully added item to the cart!'
+                // }
+                // res.redirect("products-details", { title: 'eBuy - Product Name', product: result[0] })
+                res.render("products-details", { title: 'eBuy - Product Name', product: result[0] })
+            }
+        })
+    })
+
+    app.post("/products-details", (req, res) => {
+        console.log(req.body)
+        const { product_amount, product_photo, product_category, product_name, product_price, id } = req.body
+        res.render('cart', { title: 'eBuy - Shopping Cart', product: req.body })
+            // db.query("SELECT * FROM products WHERE id = ?", req.body.id, (err, result) => {
+            //     // console.log(result[0])
+            //     res.render('cart', { title: 'eBuy - Shopping Cart', product: result[0] })
+            // })
+    })
+
+
+    // app.post("/cart", (req, res) => {
+    //     const { product_amount, product_photo, product_category, product_name, product_price, id } = req.body
+    //     db.query('SELECT * FROM products WHERE id = ?', [id], (err, result) => {
+    //             res.render("cart", { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0] })
+
+    //         })
+    //         // console.log(req.body)
+    // })
+
+    app.post("/products", (req, res) => {
+        if (req.body.product_category == 'All') {
+            db.query('SELECT * FROM products', (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("products-filter", { title: 'eBuy - Products', availableProducts: result })
+                }
+            })
+        } else {
+            db.query('SELECT * FROM products WHERE product_category = ?', req.body.product_category, (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else if (result.length == 0) {
+                    req.session.message = {
+                        type: 'error',
+                        message: 'Sorry, no products under ' + req.body.product_category
+                    }
+                } else if (result.length != 0) {
+                    res.render("products-filter", { title: 'eBuy - ' + req.body.product_category, availableProducts: result })
+                }
+            })
+        }
     })
     app.get("/login", (req, res) => {
         res.render("login", { title: 'eBuy - Log In' })
