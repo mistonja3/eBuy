@@ -45,3 +45,9 @@ for (i = 0; i < quantityInput.length; i++) {
         }
     }
 }
+
+//number of products in cart
+// productsInCartNum = document.getElementById('products-in-cart-num')
+// productsInCart = document.querySelectorAll('.products-in-cart')
+// productsInCart.innerHTML = productsInCart.length
+// document.getElementById('products-in-cart-num').innerHTML = document.querySelectorAll('.products-in-cart').length

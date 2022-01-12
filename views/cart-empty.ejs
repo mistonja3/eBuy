@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header') %>
+
+    <body>
+        <%- include('nav')%>
+            <% if (message) { %>
+                <div id="alert" class="alert closebtn alert-<%= message.type %>">
+                    <strong> <%= message.message %> </strong>
+                </div>
+                <% } %>
+                    <div class="container is-large cart">
+                        <div class="columns">
+                            <div class="column products-details-column">
+                                <h3>Product</h3>
+                            </div>
+                            <div class="column">
+                                <h3>Quantity</h3>
+                            </div>
+                            <div class="column">
+                                <h3>Price</h3>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="columns">
+                    <div class="column products-details-column">
+                        <div class="cart-products">
+                            <a class="cart-products-icon" href="/products-details">
+                                <img src="/assets/media/shoe2.jpg" alt="adidas shoes">
+                            </a>
+                            <div class="cart-product-details">
+                                <h4>ULTRABOOST 22 SHOES</h4>
+                                <p>Price: $<span class="one-piece-price">193.21</span></p>
+                                <a class="cart-remove-btn" href="">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="cart-quantity">
+                            <input class="cart-quantity-input" min="0" type="number" value="1">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="cart-total">
+                            <p>$<span class="product-subtotal">190</span></p>
+                        </div>
+                    </div>
+                </div> -->
+                        <!-- <div class="columns">
+                    <div class="column products-details-column">
+                        <div class="cart-products">
+                            <a class="cart-products-icon" href="/products-details">
+                                <img src="/assets/media/shoe2.jpg" alt="adidas shoes">
+                            </a>
+                            <div class="cart-product-details">
+                                <h4>ULTRABOOST 22 SHOES</h4>
+                                <p>Price: $<span class="one-piece-price">190</span></p>
+                                <a class="cart-remove-btn" href="">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="cart-quantity">
+                            <input class="cart-quantity-input" min="0" type="number" value="1">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="cart-total">
+                            <p>$<span class="product-subtotal">190</span></p>
+                        </div>
+                    </div>
+                </div> -->
+                        <div class="columns cart-subtotal-columns">
+                            <div class="column cart-subtotal-column">
+                                <p>There is nothing in the cart.</p>
+                            </div>
+                            <div class="column">
+                                <p>Price</p>
+                                <p>Tax (12%)</p>
+                                <p>Subtotal</p>
+                            </div>
+                            <div class="column">
+                                <div class="cart-price">
+
+                                    <p>$<span>0</span></p>
+                                </div>
+                                <div class="cart-tax">
+
+                                    <p>$<span>0</span></p>
+                                </div>
+                                <div class="cart-subtotal">
+
+                                    <p>$<span>0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%- include('footer') %>
+
+    </body>
+
+</html>

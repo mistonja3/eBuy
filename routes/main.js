@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs/dist/bcrypt")
 const req = require("express/lib/request")
+const Cart = require("../models/cart")
 
 module.exports = function(app) {
     app.get("/", (req, res) => {
@@ -32,53 +33,83 @@ module.exports = function(app) {
     app.get("/account", (req, res) => {
         res.render("account", { title: 'eBuy - Account' })
     })
-    app.get("/cart", (req, res) => {
-        db.query("SELECT * FROM products WHERE id = 213", (err, result) => {
-            if (err) {
-                console.log(err)
-            } else if (result.length == 0) {
-                res.render("cart", { title: 'eBuy - Shooping Cart', product: result[0] })
-
-            } else if (result.length != 0) {
-                res.render("cart", { title: 'eBuy - Shooping Cart', product: result[0] })
-            }
-
-        })
-    })
     app.get("/products-details", (req, res) => {
         db.query('SELECT * FROM products WHERE id = ?', req.query.id, (err, result) => {
             if (err) {
                 console.log(err)
             } else if (result.length != 0) {
-                // req.session.message = {
-                //     type: 'success',
-                //     message: 'Successfully added item to the cart!'
-                // }
-                // res.redirect("products-details", { title: 'eBuy - Product Name', product: result[0] })
+                // Cart.save(result[0])
+                // console.log(Cart.getCart())
                 res.render("products-details", { title: 'eBuy - Product Name', product: result[0] })
             }
         })
     })
 
     app.post("/products-details", (req, res) => {
-        console.log(req.body)
-        const { product_amount, product_photo, product_category, product_name, product_price, id } = req.body
-        res.render('cart', { title: 'eBuy - Shopping Cart', product: req.body })
-            // db.query("SELECT * FROM products WHERE id = ?", req.body.id, (err, result) => {
-            //     // console.log(result[0])
-            //     res.render('cart', { title: 'eBuy - Shopping Cart', product: result[0] })
+        const { product_size, product_amount, product_photo, product_name, product_price, id } = req.body
+            // let addedProduct = [product_size, product_amount, product_photo, product_name, product_price, id]
+            // db.query("INSERT INTO cart_products (product_size, product_amount, product_photo, product_name, product_price, products_id) VALUES (?,?,?,?,?,?)", addedProduct, (err, result) => {
+            //     if (err) {
+            //         console.log(err)
+            //     } else {
+            //         req.session.message = {
+            //             type: 'success',
+            //             message: 'Successfully added ' + req.body.product_name + ' to the cart.'
+            //         }
+            //         res.redirect('back')
+            //     }
             // })
+
+
+        // let addedProduct = [product_size, parseInt(product_amount), product_photo, product_name, parseFloat(product_price), id]
+        // db.query("SELECT * FROM products WHERE id = ?", req.body.id, (err, result) => {
+        // console.log(req.body.product_price)
+        // parseFloat(req.body.product_price)
+        req.body.product_price = parseFloat(req.body.product_price)
+        req.body.product_amount = parseFloat(req.body.product_amount)
+        req.body.id = parseInt(req.body.id)
+        Cart.save(req.body)
+        console.log(Cart.getCart())
+        req.session.message = {
+            type: 'success',
+            message: 'Successfully added ' + req.body.product_name + ' to the cart.'
+        }
+        res.redirect('back')
+
+        // res.render('cart', { title: 'eBuy - Shopping Cart', product: req.body })
+        // })
     })
 
-
-    // app.post("/cart", (req, res) => {
-    //     const { product_amount, product_photo, product_category, product_name, product_price, id } = req.body
-    //     db.query('SELECT * FROM products WHERE id = ?', [id], (err, result) => {
-    //             res.render("cart", { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0] })
-
-    //         })
-    //         // console.log(req.body)
+    // app.get("/product-details:id", (req, res) => {
+    //     console.log(req.params.id)
     // })
+    app.get("/cart", (req, res) => {
+        db.query("SELECT * FROM cart_products", (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                if (result.length == 0) {
+                    res.render('cart-empty', { title: 'eBuy - Shopping Cart' })
+                } else {
+                    res.render('cart', { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0] })
+                }
+            }
+        })
+    })
+
+    app.get("/remove-product", (req, res) => {
+        db.query("DELETE FROM cart_products WHERE id = ?", req.query.id, (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                req.session.message = {
+                    type: 'success',
+                    message: "Successfully removed item from cart."
+                }
+                res.redirect('cart')
+            }
+        })
+    })
 
     app.post("/products", (req, res) => {
         if (req.body.product_category == 'All') {
