@@ -8,9 +8,10 @@
             <div class="container is-large all-products">
                 <div class="all-products-top">
                     <h2>Browse All Products</h2>
-                    <form method="POST">
+                    <div class="forms-container">
+                        <form method="POST">
 
-                        <select onchange=this.form.submit() name="product_category" class="products-category-filter">
+                            <select onchange=this.form.submit() name="product_category" class="products-category-filter">
                             <option>Search by category</option>
                             <option value="All">All</option>
                             <option value="Jackets">Jackets</option>
@@ -21,11 +22,11 @@
                             <option value="Shirts">Shirts</option>
     
                         </select>
-                    </form>
-                    <form method="POST" action="/sort-by">
+                        </form>
+                        <form method="POST" action="/sort-by">
 
 
-                        <select onchange=this.form.submit() class="products-sort-filter" name="sort_by">
+                            <select onchange=this.form.submit() class="products-sort-filter" name="sort_by">
                         <option>Sort by</option>
                         <option value="high-low">Price (High - Low)</option>
                         <option value="low-high">Price (Low - High)</option>
@@ -33,7 +34,8 @@
                         <option value="z-a">Alphabetic Order (Z - A)</option>
 
                     </select>
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="columns">

@@ -777,6 +777,18 @@ img {
     .all-products {
         text-align: center;
     }
+    .all-products-top {
+        flex-direction: column;
+        /* justify-content: space-between; */
+        /* align-items: flex-end; */
+        padding-top: 30px;
+    }
+    .forms-container {
+        display: flex;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+    }
     /* .nav-list {
         position: absolute;
         display: block;
