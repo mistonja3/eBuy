@@ -4,7 +4,13 @@ const Cart = require("../models/cart")
 
 module.exports = function(app) {
     app.get("/", (req, res) => {
-        res.render("index", { title: 'eBuy - Home Page' })
+        db.query('SELECT * FROM products', (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.render('index', { title: 'eBuy - Home Page', availableProducts: result })
+            }
+        })
     })
     app.get("/products", (req, res) => {
         db.query('SELECT * FROM products', (err, result) => {
@@ -38,8 +44,6 @@ module.exports = function(app) {
             if (err) {
                 console.log(err)
             } else if (result.length != 0) {
-                // Cart.save(result[0])
-                // console.log(Cart.getCart())
                 res.render("products-details", { title: 'eBuy - Product Name', product: result[0] })
             }
         })
@@ -49,7 +53,6 @@ module.exports = function(app) {
         req.body.product_price = parseFloat(req.body.product_price)
         req.body.product_amount = parseFloat(req.body.product_amount)
         req.body.id = parseInt(req.body.id)
-            // console.log(req.body.product_size)
         if (req.body.product_size === "none" || req.body.product_amount == 0) {
             req.session.message = {
                 type: 'error',
@@ -64,16 +67,8 @@ module.exports = function(app) {
             }
             res.redirect('back')
         }
-
-        // console.log(Cart.getCart())
-
-
-
     })
 
-    // app.get("/product-details:id", (req, res) => {
-    //     console.log(req.params.id)
-    // })
     app.get("/cart", (req, res) => {
         const cart = Cart.getCart()
         if (cart == null || cart.products.length == 0) {
@@ -84,7 +79,6 @@ module.exports = function(app) {
     })
 
     app.get("/remove-product", (req, res) => {
-        // console.log(req.query.product_size)
         Cart.delete(req.query.id, req.query.product_size)
         res.redirect("cart")
     })
@@ -114,7 +108,6 @@ module.exports = function(app) {
         }
     })
     app.post("/sort-by", (req, res) => {
-        // console.log(req.body.sort_by)
         const { sort_by } = req.body
         if (sort_by == "high-low") {
             db.query('SELECT * FROM products ORDER BY product_price DESC', (err, result) => {
