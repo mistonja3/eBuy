@@ -46,38 +46,29 @@ module.exports = function(app) {
     })
 
     app.post("/products-details", (req, res) => {
-        const { product_size, product_amount, product_photo, product_name, product_price, id } = req.body
-            // let addedProduct = [product_size, product_amount, product_photo, product_name, product_price, id]
-            // db.query("INSERT INTO cart_products (product_size, product_amount, product_photo, product_name, product_price, products_id) VALUES (?,?,?,?,?,?)", addedProduct, (err, result) => {
-            //     if (err) {
-            //         console.log(err)
-            //     } else {
-            //         req.session.message = {
-            //             type: 'success',
-            //             message: 'Successfully added ' + req.body.product_name + ' to the cart.'
-            //         }
-            //         res.redirect('back')
-            //     }
-            // })
-
-
-        // let addedProduct = [product_size, parseInt(product_amount), product_photo, product_name, parseFloat(product_price), id]
-        // db.query("SELECT * FROM products WHERE id = ?", req.body.id, (err, result) => {
-        // console.log(req.body.product_price)
-        // parseFloat(req.body.product_price)
         req.body.product_price = parseFloat(req.body.product_price)
         req.body.product_amount = parseFloat(req.body.product_amount)
         req.body.id = parseInt(req.body.id)
-        Cart.save(req.body)
-        console.log(Cart.getCart())
-        req.session.message = {
-            type: 'success',
-            message: 'Successfully added ' + req.body.product_name + ' to the cart.'
+            // console.log(req.body.product_size)
+        if (req.body.product_size === "none" || req.body.product_amount == 0) {
+            req.session.message = {
+                type: 'error',
+                message: 'Please select the size and/or amount of the item(s).'
+            }
+            res.redirect('back')
+        } else {
+            Cart.save(req.body)
+            req.session.message = {
+                type: 'success',
+                message: "Successfully added " + req.body.product_name + "to the cart."
+            }
+            res.redirect('back')
         }
-        res.redirect('back')
 
-        // res.render('cart', { title: 'eBuy - Shopping Cart', product: req.body })
-        // })
+        // console.log(Cart.getCart())
+
+
+
     })
 
     // app.get("/product-details:id", (req, res) => {
@@ -88,13 +79,13 @@ module.exports = function(app) {
         if (cart == null || cart.products.length == 0) {
             res.render('cart-empty', { title: 'eBuy - Shopping Cart' })
         } else {
-            console.log(cart)
             res.render("cart", { title: 'eBuy - Shopping Cart', cart: cart })
         }
     })
 
     app.get("/remove-product", (req, res) => {
-        Cart.delete(req.query.id)
+        // console.log(req.query.product_size)
+        Cart.delete(req.query.id, req.query.product_size)
         res.redirect("cart")
     })
 
@@ -118,6 +109,43 @@ module.exports = function(app) {
                     }
                 } else if (result.length != 0) {
                     res.render("products-filter", { title: 'eBuy - ' + req.body.product_category, availableProducts: result })
+                }
+            })
+        }
+    })
+    app.post("/sort-by", (req, res) => {
+        // console.log(req.body.sort_by)
+        const { sort_by } = req.body
+        if (sort_by == "high-low") {
+            db.query('SELECT * FROM products ORDER BY product_price DESC', (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("products-filter", { title: 'eBuy - Products', availableProducts: result })
+                }
+            })
+        } else if (sort_by == "low-high") {
+            db.query('SELECT * FROM products ORDER BY product_price ASC', (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("products-filter", { title: 'eBuy - Products', availableProducts: result })
+                }
+            })
+        } else if (sort_by == "a-z") {
+            db.query('SELECT * FROM products ORDER BY product_name ASC', (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("products-filter", { title: 'eBuy - Products', availableProducts: result })
+                }
+            })
+        } else if (sort_by == "z-a") {
+            db.query('SELECT * FROM products ORDER BY product_name DESC', (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("products-filter", { title: 'eBuy - Products', availableProducts: result })
                 }
             })
         }

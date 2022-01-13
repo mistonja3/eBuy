@@ -38,7 +38,7 @@
                                                 </h4>
                                                 <p>Price: $<span class="one-piece-price"><%=product.product_price%></span></p>
                                                 <p>Size: <span class="one-piece-size"><%=product.product_size%></span></p>
-                                                <a class="cart-remove-btn" href="/remove-product?id=<%= product.id %>" onclick="return confirm('Are you sure you want to remove <%= product.product_name %>?')">Remove</a>
+                                                <a class="cart-remove-btn" href="/remove-product?id=<%= product.id %>&product_size=<%= product.product_size %>" onclick="return confirm('Are you sure you want to remove <%= product.product_name %>?')">Remove</a>
                                             </div>
                                         </div>
                                     </div>

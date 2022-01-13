@@ -243,16 +243,16 @@ img {
     margin: 20px 0;
     padding: 10px;
     text-align: center;
-    color: #000;
+    color: #fff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .alert-success {
-    /* background-color: #12f142; */
+    background-color: #12f142;
 }
 
 .alert-error {
-    /* background-color: #f44336; */
+    background-color: #f44336;
 }
 
 .cart-products {
@@ -277,7 +277,7 @@ img {
 }
 
 .cart-products img {
-    width: 100px;
+    width: 150px;
     /* padding: 10px 0 20px; */
 }
 
