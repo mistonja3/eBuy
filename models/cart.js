@@ -30,38 +30,47 @@
 let cart = null
 module.exports = class Cart {
     static save(product) {
+
         if (cart) {
             const existingIndex = cart.products.findIndex(p => p.id == product.id)
-            console.log(product.product_size)
             const existingProduct = cart.products[existingIndex]
-                // console.log(existingIndex)
-            if ((existingIndex >= 0) && (product.product_size == existingProduct.product_size)) {
-                console.log("same item and size")
+            if ((existingIndex >= 0) && (product.product_size === existingProduct.product_size)) {
+                console.log("same item and size ", existingIndex)
+                    // console.log(existingIndex)
                 existingProduct.product_amount += product.product_amount
                 existingProduct.product_size = product.product_size;
-                cart.totalPrice += product.product_price
+                // cart.totalPrice += product.product_price * product.product_amount
             } else if ((existingIndex) >= 0 && (product.product_size != existingProduct.product_size)) {
-                console.log("same item different size")
+                console.log("same item different size ", existingIndex)
                 product.product_amount = product.product_amount
                 product.product_size = product.product_size;
                 cart.products.push(product)
+                    // cart.totalPrice += product.product_price * product.product_amount
             } else {
                 console.log("different item")
                 product.product_amount = product.product_amount
                 product.product_size = product.product_size;
                 cart.products.push(product)
+                    // cart.totalPrice += product.product_price * product.product_amount
             }
 
         } else {
-            cart = { products: [], totalPrice: 0 };
+            cart = { products: [] };
             product.product_amount = product.product_amount;
             product.product_size = product.product_size;
             cart.products.push(product)
+                // cart.totalPrice += product.product_price * product.product_amount
         }
-        cart.totalPrice += product.product_price
-
     }
     static getCart() {
         return cart
+    }
+
+    static delete(id) {
+        const products = cart.products
+        const isExisting = products.findIndex(p => p.id == id)
+        if (isExisting >= 0) {
+            products.splice(isExisting, 1)
+        }
     }
 }

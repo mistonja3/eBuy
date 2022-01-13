@@ -84,31 +84,18 @@ module.exports = function(app) {
     //     console.log(req.params.id)
     // })
     app.get("/cart", (req, res) => {
-        db.query("SELECT * FROM cart_products", (err, result) => {
-            if (err) {
-                console.log(err)
-            } else {
-                if (result.length == 0) {
-                    res.render('cart-empty', { title: 'eBuy - Shopping Cart' })
-                } else {
-                    res.render('cart', { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0] })
-                }
-            }
-        })
+        const cart = Cart.getCart()
+        if (cart == null || cart.products.length == 0) {
+            res.render('cart-empty', { title: 'eBuy - Shopping Cart' })
+        } else {
+            console.log(cart)
+            res.render("cart", { title: 'eBuy - Shopping Cart', cart: cart })
+        }
     })
 
     app.get("/remove-product", (req, res) => {
-        db.query("DELETE FROM cart_products WHERE id = ?", req.query.id, (err, result) => {
-            if (err) {
-                console.log(err)
-            } else {
-                req.session.message = {
-                    type: 'success',
-                    message: "Successfully removed item from cart."
-                }
-                res.redirect('cart')
-            }
-        })
+        Cart.delete(req.query.id)
+        res.redirect("cart")
     })
 
     app.post("/products", (req, res) => {

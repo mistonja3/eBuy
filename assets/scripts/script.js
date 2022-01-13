@@ -18,10 +18,14 @@ for (let i = 0; i < productSubtotal.length; i++) {
 
     //update prices based on the input
     quantityInput[i].addEventListener('change', () => {
-
         productSubtotal[i].innerHTML = parseFloat(onePiecePrice[i].innerHTML * quantityInput[i].value).toFixed(2);
-        summed += parseFloat(productSubtotal[i].innerHTML)
-        cartPrice.innerHTML = summed.toFixed(2)
+
+        var count = 0
+        for (let j = 0; j < productSubtotal.length; j++) {
+            count = count + parseInt(productSubtotal[j].innerHTML)
+
+        }
+        cartPrice.innerHTML = parseFloat(count).toFixed(2)
         cartTax.innerHTML = parseFloat(parseFloat(cartPrice.innerHTML) * 0.12).toFixed(2)
         cartSubTotal.innerHTML = parseFloat(parseFloat(cartPrice.innerHTML) + parseFloat(cartTax.innerHTML)).toFixed(2)
     })
