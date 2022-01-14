@@ -13,12 +13,12 @@ dotenv.config({ path: "./.env" })
 const session = require("express-session");
 // var MySQLStore = require('express-mysql-session')(session);
 
-var options = {
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    database: process.env.DATABASE,
-};
+// var options = {
+//     host: process.env.DATABASE_HOST,
+//     user: process.env.DATABASE_USER,
+//     password: process.env.DATABASE_PASS,
+//     database: process.env.DATABASE,
+// };
 
 // var db = mysql.createPool(options);
 // var sessionStore = new MySQLStore({}, db);
@@ -27,20 +27,33 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(cookieParser('secret'));
 app.use(session({
-        secret: 'secret',
-        cookie: { maxAge: null },
-        resave: false,
-        // store: sessionStore,
-        saveUninitialized: false
-    }))
-    // app.use(flash())
+    secret: 'secret',
+    cookie: { maxAge: 60 * 100 * 30 },
+    resave: false,
+    saveUninitialized: false
+}))
+
 app.use(function(req, res, next) {
     res.locals.message = req.session.message;
-    // res.locals.session = req.session
     delete req.session.message;
     next();
 })
 
+
+app.use((req, res, next) => {
+    let newUser = req.session.user
+    if (newUser) {
+        db.query("SELECT * FROM users WHERE id = ?", newUser[0].id, (err, result) => {
+            // console.log("app uses ", result)
+            req.user = result
+                // console.log("reqq uses ", req.user)
+
+        })
+    } else {
+
+    }
+    next()
+})
 
 const db = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -48,6 +61,7 @@ const db = mysql.createPool({
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE
 })
+
 
 
 

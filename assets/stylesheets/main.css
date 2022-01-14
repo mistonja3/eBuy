@@ -476,11 +476,13 @@ img {
     /* margin: 100px auto 50px; */
 }
 
-.all-products .columns {
+.all-products .columns,
+.featured .columns {
     flex-wrap: wrap;
 }
 
-.all-products .column {
+.all-products .column,
+.featured .column {
     flex-basis: 24%;
     flex-grow: 0;
     /* flex-basis: unset; */

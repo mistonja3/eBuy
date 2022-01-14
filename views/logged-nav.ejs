@@ -17,11 +17,17 @@
             <a href="/products">
                 <li>Products</li>
             </a>
+
             <a href="/support">
                 <li>Support</li>
             </a>
-            <a href="/login">
-                <li>Log In</li>
+            <a href="/logout">
+                <li>Hi,
+                    <%= name%>
+                </li>
+            </a>
+            <a href="/logout">
+                <li>Logout</li>
             </a>
             <a href="/cart">
                 <li><img src="/assets/media/bag.png" alt="shopping bag">
@@ -40,8 +46,9 @@
                 <ul>
                     <li class="side-menu-links"><a href="/">Home</a></li>
                     <li class="side-menu-links"><a href="/products">Products</a></li>
+                    <li class="side-menu-links"><a href="/about">About</a></li>
                     <li class="side-menu-links"><a href="/support">Support</a></li>
-                    <li class="side-menu-links"><a href="/login">Login</a></li>
+                    <li class="side-menu-links"><a href="/login">Hi, <%= name%></a></li>
                     <li class="side-menu-links"><a href="/cart">Shopping Cart</a></li>
 
                 </ul>

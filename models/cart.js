@@ -43,5 +43,8 @@ module.exports = class Cart {
             return itm.id == id && itm.product_size == size;
         });
         cart.products.splice(found, 1)
+        if (cart.products.length == 0) {
+            cart = null
+        }
     }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header') %>
+
+    <body>
+        <%- include('logged-nav')%>
+
+            <div class="container is-large all-products">
+                <div class="all-products-top">
+                    <h2>Browse All Products</h2>
+                    <div class="forms-container">
+                        <form method="POST">
+
+                            <select onchange=this.form.submit() name="product_category" class="products-category-filter">
+                            <option>Search by category</option>
+                            <option value="All">All</option>
+                            <option value="Jackets">Jackets</option>
+                            <option value="Pants">Pants</option>
+                            <option value="Shoes">Shoes</option>
+                            <option value="Sweaters">Sweaters</option>
+                            <option value="Sweatshirts">Sweatshirts</option>
+                            <option value="Shirts">Shirts</option>
+    
+                        </select>
+                        </form>
+                        <form method="POST" action="/sort-by">
+
+
+                            <select onchange=this.form.submit() class="products-sort-filter" name="sort_by">
+                        <option>Sort by</option>
+                        <option value="high-low">Price (High - Low)</option>
+                        <option value="low-high">Price (Low - High)</option>
+                        <option value="a-z">Alphabetic Order (A - Z)</option>
+                        <option value="z-a">Alphabetic Order (Z - A)</option>
+                                
+                    </select>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="columns">
+
+                    <% availableProducts.forEach(function(product){ %>
+
+                        <div class="column">
+                            <form class="products-form" method="POST">
+                                <a class="cart-products-icon" id="submit-a" href="/products-details?id=<%=product.id%>">
+                                    <div class="img-container ">
+                                        <img src="<%=product.product_photo%>" alt="<%=product.product_name%>">
+                                    </div>
+                                    <h3>
+                                        <%=product.product_name%>
+                                    </h3>
+                                    <p>$
+                                        <%=product.product_price%>
+                                    </p>
+                                </a>
+                            </form>
+                        </div>
+
+                        <% }) %>
+
+                </div>
+            </div>
+            <%- include('footer') %>
+
+    </body>
+
+</html>
