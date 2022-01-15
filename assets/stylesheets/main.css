@@ -937,6 +937,10 @@ img {
     .contact-details{
         width: 100%;
     }
+
+    .login-container{
+        width: 90%;
+    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 780px){
