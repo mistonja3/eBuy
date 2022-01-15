@@ -21,16 +21,16 @@
             <a href="/support">
                 <li>Support</li>
             </a>
-            <a href="/logout">
-                <li>Hi,
-                    <%= name%>
-                </li>
-            </a>
-            <a href="/logout">
-                <li>Logout</li>
-            </a>
+            <li class="login-hover">Hi,
+
+                <%= name%>
+                <p class="hidden-logout"><a href="/logout">Logout</a></p>
+            </li>
+            <!-- </a> -->
             <a href="/cart">
-                <li><img src="/assets/media/bag.png" alt="shopping bag">
+                <li class="cart-items-num"><img src="/assets/media/bag.png" alt="shopping bag">
+                    <p class="items-num">
+                    </p>
                 </li>
             </a>
         </ul>
@@ -46,10 +46,10 @@
                 <ul>
                     <li class="side-menu-links"><a href="/">Home</a></li>
                     <li class="side-menu-links"><a href="/products">Products</a></li>
-                    <li class="side-menu-links"><a href="/about">About</a></li>
                     <li class="side-menu-links"><a href="/support">Support</a></li>
-                    <li class="side-menu-links"><a href="/login">Hi, <%= name%></a></li>
+                    <li class="side-menu-links"><a href="/home">Hi, <%= name%></a></li>
                     <li class="side-menu-links"><a href="/cart">Shopping Cart</a></li>
+                    <li class="side-menu-links"><a href="/logout">Logout</a></li>
 
                 </ul>
             </nav>

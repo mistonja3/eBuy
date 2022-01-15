@@ -2,31 +2,27 @@
 <html lang="en">
 <%- include('header') %>
 
-    <body>
-        <%- include('nav')%>
-            <div class="login-container">
-                <% if (message) { %>
-                    <div id="alert" class="alert closebtn alert-<%= message.type %>">
-                        <strong> <%= message.message %> </strong>
-                    </div>
-                    <% } %>
-                        <h2>REGISTER</h2>
+<body>
+    <%- include('nav')%>
+    <div class="login-container">
+        <% if (message) { %>
+        <div id="alert" class="alert closebtn alert-<%= message.type %>">
+            <strong> <%= message.message %> </strong>
+        </div>
+        <% } %>
+        <h2>REGISTER</h2>
 
-                        <form method="POST" action="/register">
-                            <!-- <label for="name">Name</label> -->
-                            <input type="text" id="name" name="name" placeholder="Your Name">
-                            <!-- <label for="username">Username</label> -->
-                            <input type="text" id="username" name="username" placeholder="Username">
-                            <!-- <label for="email">Email</label> -->
-                            <input type="text" id="email" name="email" placeholder="Email">
-                            <!-- <label for="password">Password</label> -->
-                            <input type="password" id="password" name="password" placeholder="Password">
-                            <button type="submit">Register</button>
-                        </form>
-                        <p>Don't have an account?<a href="/login">Login here</a></p>
-            </div>
-            <%- include('footer') %>
+        <form method="POST" action="/register">
+            <input type="text" id="name" name="name" placeholder="Your Name">
+            <input type="text" id="username" name="username" placeholder="Username">
+            <input type="text" id="email" name="email" placeholder="Email">
+            <input type="password" id="password" name="password" placeholder="Password">
+            <button type="submit">Register</button>
+        </form>
+        <p>Don't have an account?<a href="/login">Login here</a></p>
+    </div>
+    <%- include('footer') %>
 
-    </body>
+</body>
 
 </html>

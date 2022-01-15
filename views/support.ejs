@@ -2,13 +2,40 @@
 <html lang="en">
 <%- include('header') %>
 
-    <body>
-        <%- include('nav')%>
+<body>
+    <%- include('nav')%>
 
+    <div class="container is-large support">
+        <div class="contact-details">
+            <h1>Contact Us</h1>
+            <p>If you have any enquiries, please don't hesitate to contact us and we will try to resolve your enquiry as soon as possible.</p>    
+            <div class="contact-form">
+                <form>
+                    <h2>Send Message</h2>
+                    <div class="contact-input">
+                        <input type="text" required="required">
+                        <span>Name</span>
+                    </div>
+                    <div class="contact-input">
+                        <input type="text" required="required">
+                        <span>Email</span>
+                    </div>
+                    <div class="contact-input">
+                        <textarea required="required"></textarea>
+                        <span>Your message</span>
+                    </div>
+                    <div class="contact-input">
+                        <input type="submit" value="Send">
+                    </div>
+                </form>
+            </div>
+        
 
+        </div>
+    </div> 
 
-            <%- include('footer') %>
+    <%- include('footer') %>
 
-    </body>
+</body>
 
 </html>

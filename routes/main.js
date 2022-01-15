@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs/dist/bcrypt")
-const req = require("express/lib/request")
 const Cart = require("../models/cart")
 
 module.exports = function(app) {
@@ -13,21 +12,20 @@ module.exports = function(app) {
                     console.log(err)
                 } else {
                     res.render('index', { title: 'eBuy - Home Page', availableProducts: result })
-                    return
                 }
             })
         }
     })
+
     app.get("/home", (req, res) => {
         let user = req.session.user
-        console.log("wwww", user)
         if (user) {
+            console.log(req.session)
             db.query('SELECT * FROM products', (err, result) => {
                 if (err) {
                     console.log(err)
                 } else {
                     res.render('home', { title: 'eBuy - Home Page', name: user[0].name, availableProducts: result })
-                    return
                 }
             })
         } else {
@@ -35,6 +33,7 @@ module.exports = function(app) {
         }
 
     })
+
     app.get("/products", (req, res) => {
         let user = req.session.user
         if (user) {
@@ -70,9 +69,8 @@ module.exports = function(app) {
                 }
             })
         }
-
-
     })
+
     app.get("/support", (req, res) => {
         let user = req.session.user
         if (user) {
@@ -80,8 +78,8 @@ module.exports = function(app) {
         } else {
             res.render("support", { title: 'eBuy - Support' })
         }
-
     })
+
     app.get("/products-details", (req, res) => {
         let user = req.session.user
         if (user) {
@@ -101,7 +99,6 @@ module.exports = function(app) {
                 }
             })
         }
-
     })
 
     app.post("/products-details", (req, res) => {
@@ -143,7 +140,6 @@ module.exports = function(app) {
 
     app.get("/cart", (req, res) => {
         let user = req.session.user
-            // console.log(user)
         if (user) {
             db.query("SELECT * FROM cart_products WHERE user_id = ?", user[0].id, (err, result) => {
                 if (err) {
@@ -165,11 +161,9 @@ module.exports = function(app) {
                 res.render("cart", { title: 'eBuy - Shopping Cart', cart: cart })
             }
         }
-
     })
 
     app.get("/remove-product", (req, res) => {
-
         let user = req.session.user
         if (user) {
             db.query("DELETE FROM cart_products WHERE id = ?", req.query.id, (err, result) => {
@@ -214,6 +208,7 @@ module.exports = function(app) {
             })
         }
     })
+
     app.post("/sort-by", (req, res) => {
         const { sort_by } = req.body
         if (sort_by == "high-low") {
@@ -250,12 +245,15 @@ module.exports = function(app) {
             })
         }
     })
+
     app.get("/login", (req, res) => {
         res.render("login", { title: 'eBuy - Log In' })
     })
+
     app.get("/register", (req, res) => {
         res.render("register", { title: 'eBuy - Register' })
     })
+
     app.get("/logout", (req, res, next) => {
         if (req.session.user) {
             req.session.destroy(() => {
@@ -263,6 +261,7 @@ module.exports = function(app) {
             })
         }
     })
+
     app.post("/register", (req, res) => {
         const { name, email, username, password } = req.body;
         db.query('SELECT email FROM users WHERE email = ?', [email], async(err, result) => {
@@ -291,6 +290,7 @@ module.exports = function(app) {
             }
         })
     })
+    
     app.post("/login", (req, res) => {
         const { email, password } = req.body;
         db.query('SELECT id, name, email, password FROM users WHERE email = ?', [email], async(err, result) => {

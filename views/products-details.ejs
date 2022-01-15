@@ -2,73 +2,70 @@
 <html lang="en">
 <%- include('header') %>
 
-    <body>
-        <%- include('nav')%>
+<body>
+    <%- include('nav')%>
 
-            <div class="container is-large product-details">
-                <form method="POST">
-                    <% if (message) { %>
-                        <div id="alert" class="alert closebtn alert-<%= message.type %>">
-                            <strong> <%= message.message %> </strong>
-                        </div>
-                        <% } %>
-                            <div class="columns">
-                                <div class="column">
-                                    <div class="img-container">
-                                        <img src="<%=product.product_photo%>" name="product_photo" alt="<%=product.product_name%>">
-                                    </div>
-                                </div>
-                                <div class="column product-descr">
-                                    <p class="product-category">Categories/
-                                        <%=product.product_category%>
-                                    </p>
-                                    <h1 class="product-title">
-                                        <%=product.product_name%>
-                                    </h1>
-                                    <p class="product-price">$
-                                        <%=product.product_price%>
-                                    </p>
-                                    <% if(product.product_category == 'Shoes'){%>
-                                        <select name="product_size">
-                            <option value="none">Select the size</option>
-                            <option value="38">38</option>
-                            <option value="39">39</option>
-                            <option value="40">40</option>
-                            <option value="41">41</option>
-                            <option value="42">42</option>
-                        </select>
-                                        <%} else{%>
-                                            <select name="product_size">
-                                <option value="none">Select the size</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                                <option value="XXL">XXL</option>
-                            </select>
-                                            <%}%>
-                                                <input id="quantity" name="product_amount" value="1" type="number">
-                                                <button type="submit" class="btn">Add To Cart</button>
-                                                <h3>Product Details</h3>
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsum consectetur non repellendus aperiam minus, explicabo adipisci porro saepe fugit culpa nam unde commodi voluptatem dicta eum, vel sit
-                                                    odio!
-                                                </p>
-                                </div>
-
-                            </div>
-                            <input type="hidden" value="<%=product.product_photo%>" name="product_photo">
-                            <input type="hidden" value="<%=product.product_category%>" name="product_category">
-                            <input type="hidden" value="<%=product.product_name%>" name="product_name">
-                            <input type="hidden" value="<%=product.product_price%>" name="product_price">
-                            <input type="hidden" value="<%=product.id%>" name="id">
-
-                </form>
+    <div class="container is-large product-details">
+        <form method="POST">
+            <% if (message) { %>
+            <div id="alert" class="alert closebtn alert-<%= message.type %>">
+                <strong> <%= message.message %> </strong>
             </div>
+            <% } %>
+            <div class="columns">
+                <div class="column">
+                    <div class="img-container">
+                        <img src="<%=product.product_photo%>" name="product_photo" alt="<%=product.product_name%>">
+                    </div>
+                </div>
+                <div class="column product-descr">
+                    <p class="product-category">Categories/
+                        <%=product.product_category%>
+                    </p>
+                    <h1 class="product-title">
+                        <%=product.product_name%>
+                    </h1>
+                    <p class="product-price">$
+                        <%=product.product_price%>
+                    </p>
+                    <% if(product.product_category == 'Shoes'){%>
+                    <select name="product_size">
+                        <option value="none">Select the size</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="42">42</option>
+                    </select>
+                    <%} else{%>
+                    <select name="product_size">
+                        <option value="none">Select the size</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                    <%}%>
+                    <input id="quantity" name="product_amount" class="qty-inp" min="0" value="1" type="number">
+                    <button type="submit" class="btn">Add To Cart</button>
+                    <h3>Product Details</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsum consectetur non repellendus aperiam minus, explicabo adipisci porro saepe fugit culpa nam unde commodi voluptatem dicta eum, vel sit
+                        odio!
+                    </p>
+                </div>
 
+            </div>
+                    <input type="hidden" value="<%=product.product_photo%>" name="product_photo">
+                    <input type="hidden" value="<%=product.product_category%>" name="product_category">
+                    <input type="hidden" value="<%=product.product_name%>" name="product_name">
+                    <input type="hidden" value="<%=product.product_price%>" name="product_price">
+                    <input type="hidden" value="<%=product.id%>" name="id">
+        </form>
+    </div>
 
+    <%- include('footer') %>
 
-            <%- include('footer') %>
-
-    </body>
+</body>
 
 </html>

@@ -2,58 +2,58 @@
 <html lang="en">
 <%- include('header') %>
 
-    <body>
-        <%- include('logged-nav')%>
-            <% if (message) { %>
-                <div id="alert" class="alert closebtn alert-<%= message.type %>">
-                    <strong> <%= message.message %> </strong>
+<body>
+    <%- include('logged-nav')%>
+    <% if (message) { %>
+    <div id="alert" class="alert closebtn alert-<%= message.type %>">
+        <strong> <%= message.message %> </strong>
+    </div>
+    <% } %>
+    <div class="container is-large cart">
+        <div class="columns">
+            <div class="column products-details-column">
+                <h3>Product</h3>
+            </div>
+            <div class="column m-centered">
+                <h3>Quantity</h3>
+            </div>
+            <div class="column m-centered">
+                <h3>Price</h3>
+            </div>
+
+        </div>
+        <div class="columns">
+            <p>There is nothing in the cart.</p>
+        </div>
+
+        <div class="columns cart-subtotal-columns">
+            <div class="column cart-subtotal-column">
+
+            </div>
+            <div class="column">
+                <p>Price</p>
+                <p>Tax (12%)</p>
+                <p>Subtotal</p>
+            </div>
+            <div class="column">
+                <div class="cart-price">
+
+                    <p>$<span>0</span></p>
                 </div>
-                <% } %>
-                    <div class="container is-large cart">
-                        <div class="columns">
-                            <div class="column products-details-column">
-                                <h3>Product</h3>
-                            </div>
-                            <div class="column m-centered">
-                                <h3>Quantity</h3>
-                            </div>
-                            <div class="column m-centered">
-                                <h3>Price</h3>
-                            </div>
+                <div class="cart-tax">
 
-                        </div>
-                        <div class="columns">
-                            <p>There is nothing in the cart.</p>
-                        </div>
+                    <p>$<span>0</span></p>
+                </div>
+                <div class="cart-subtotal">
 
-                        <div class="columns cart-subtotal-columns">
-                            <div class="column cart-subtotal-column">
+                    <p>$<span>0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            </div>
-                            <div class="column">
-                                <p>Price</p>
-                                <p>Tax (12%)</p>
-                                <p>Subtotal</p>
-                            </div>
-                            <div class="column">
-                                <div class="cart-price">
+    <%- include('logged-footer') %>
 
-                                    <p>$<span>0</span></p>
-                                </div>
-                                <div class="cart-tax">
-
-                                    <p>$<span>0</span></p>
-                                </div>
-                                <div class="cart-subtotal">
-
-                                    <p>$<span>0</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <%- include('footer') %>
-
-    </body>
+</body>
 
 </html>

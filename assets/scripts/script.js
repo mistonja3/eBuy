@@ -49,3 +49,13 @@ for (i = 0; i < quantityInput.length; i++) {
         }
     }
 }
+var qtyInp = document.querySelectorAll('.qty-inp')
+for (i = 0; i < qtyInp.length; i++) {
+    qtyInp[i].onkeydown = function(e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106) ||
+                (e.keyCode > 47 && e.keyCode < 58) ||
+                e.keyCode == 8)) {
+            return false;
+        }
+    }
+}

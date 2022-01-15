@@ -2,102 +2,76 @@
 <html lang="en">
 <%- include('header') %>
 
-    <body>
-        <%- include('logged-nav')%>
+<body>
+    <%- include('logged-nav')%>
 
-            <div class="container is-large home-page">
-                <div class="columns">
-                    <div class="column">
-                        <div class="home-page-descr">
-                            <h2>Make Yourself and Your Home Comfortable!</h2>
-                            <p>Equip your home with the newest technology, and most importantly keep up with the todays fashion!</p>
-                            <a class="btn" href="/products">Search Products</a>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <img class="home-page-img" src="/assets/media/shopbg.png" alt="shopping">
-                    </div>
+    <div class="container is-large home-page">
+        <div class="columns">
+            <div class="column">
+                <div class="home-page-descr">
+                    <h2>Make Yourself and Your Home Comfortable!</h2>
+                    <p>Equip your home with the newest technology, and most importantly keep up with the todays fashion!
+                    </p>
+                    <a class="btn" href="/products">Search Products</a>
                 </div>
             </div>
-            <div class="container is-large categories">
-                <h2 class="centered">Top Searched Categories</h2>
-                <div class="columns">
-                    <div class="column">
-                        <div class="img-container">
-                            <img src="/assets/media/shoecat.jpg" alt="shoes model">
-                            <a href="/products" class="categorie-descr">SHOES</a>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="img-container">
-                            <img src="/assets/media/sweater-front.jpg" alt="sweater">
-                            <a href="/products" class="categorie-descr">SWEATERS</a>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="img-container">
-                            <img src="/assets/media/jacket.jpg" alt="jacket model">
-                            <a href="/products" class="categorie-descr">JACKETS</a>
-                        </div>
-                    </div>
+            <div class="column">
+                <img class="home-page-img" src="/assets/media/shopbg.png" alt="shopping">
+            </div>
+        </div>
+    </div>
+    <div class="container is-large categories">
+        <h2 class="centered">Top Searched Categories</h2>
+        <div class="columns">
+            <div class="column">
+                <div class="img-container">
+                    <img src="/assets/media/shoecat.jpg" alt="shoes model">
+                    <a href="/products" class="categorie-descr">SHOES</a>
                 </div>
             </div>
-            </div>
-            <div class="container is-large featured">
-                <h2 class="centered">Featured Products</h2>
-                <!-- Slider main container -->
-                <!-- <div class="swiper"> -->
-
-                <!-- Additional required wrapper -->
-                <!-- <div class="swiper-wrapper"> -->
-                <!-- Slides -->
-
-                <!-- <div class="swiper-slide"> -->
-                <div class="columns">
-
-                    <% availableProducts.forEach(function(product){ %>
-
-                        <div class="column">
-                            <form class="products-form" method="POST">
-                                <a class="cart-products-icon" id="submit-a" href="/products-details?id=<%=product.id%>">
-                                    <div class="img-container ">
-                                        <img src="<%=product.product_photo%>" alt="<%=product.product_name%>">
-                                    </div>
-                                    <h3>
-                                        <%=product.product_name%>
-                                    </h3>
-                                    <p>$
-                                        <%=product.product_price%>
-                                    </p>
-                                </a>
-                            </form>
-                        </div>
-
-                        <% }) %>
-
+            <div class="column">
+                <div class="img-container">
+                    <img src="/assets/media/sweater-front.jpg" alt="sweater">
+                    <a href="/products" class="categorie-descr">SWEATERS</a>
                 </div>
-                <!-- </div> -->
+            </div>
+            <div class="column">
+                <div class="img-container">
+                    <img src="/assets/media/jacket.jpg" alt="jacket model">
+                    <a href="/products" class="categorie-descr">JACKETS</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container is-large featured">
+        <h2 class="centered">Featured Products</h2>
+        <div class="columns">
 
+            <% availableProducts.forEach(function(product){ %>
 
-
-
-                <!-- </div> -->
-
-                <!-- If we need navigation buttons -->
-                <!-- <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div> -->
-
-                <!-- If we need scrollbar -->
-                <!-- <div class="swiper-scrollbar"></div> -->
-                <!-- </div> -->
+            <div class="column">
+                <form class="products-form" method="POST">
+                    <a class="cart-products-icon" id="submit-a" href="/products-details?id=<%=product.id%>">
+                        <div class="img-container ">
+                            <img src="<%=product.product_photo%>" alt="<%=product.product_name%>">
+                        </div>
+                        <h3>
+                            <%=product.product_name%>
+                        </h3>
+                        <p>$
+                            <%=product.product_price%>
+                        </p>
+                    </a>
+                </form>
             </div>
 
+            <% }) %>
 
-
-
-
-            <%- include('footer') %>
-
-    </body>
+        </div>
+    </div>
+    
+    <%- include('logged-footer') %>
+</body>
 
 </html>
