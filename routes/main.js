@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.get("/home", (req, res) => {
         let user = req.session.user
         if (user) {
-            console.log(req.session)
+            // console.log(req.session)
             db.query('SELECT * FROM products', (err, result) => {
                 if (err) {
                     console.log(err)
@@ -128,7 +128,7 @@ module.exports = function(app) {
                 req.body.product_amount = parseFloat(req.body.product_amount)
                 req.body.id = parseInt(req.body.id)
                 Cart.save(req.body)
-                console.log(Cart.getCart())
+                // console.log(Cart.getCart())
                 req.session.message = {
                     type: 'success',
                     message: "Successfully added " + req.body.product_name + " to the cart."
@@ -179,7 +179,7 @@ module.exports = function(app) {
             })
         } else {
             Cart.delete(req.query.id, req.query.product_size)
-            console.log(Cart.getCart())
+            // console.log(Cart.getCart())
             res.redirect("cart")
         }
     })
@@ -264,31 +264,40 @@ module.exports = function(app) {
 
     app.post("/register", (req, res) => {
         const { name, email, username, password } = req.body;
-        db.query('SELECT email FROM users WHERE email = ?', [email], async(err, result) => {
-            if (err) {
-                console.log(err)
-            } else if (result.length > 0) {
-                req.session.message = {
-                    type: 'error',
-                    message: 'Email is already in use!'
-                }
-                res.redirect('register')
-            } else {
-                let hashedPassword = await bcrypt.hash(password, 10);
-                db.query('INSERT INTO users SET ?', { name: name, username: username, email: email, password: hashedPassword }, (err, result) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        console.log(result)
-                        req.session.message = {
-                            type: 'success',
-                            message: 'Successfully registered an account!'
-                        }
-                        res.redirect('login')
-                    }
-                })
+        if (email == "" || password == "" || name == "" || username == "") {
+            req.session.message = {
+                type: 'error',
+                message: 'Please fill in all the fields.'
             }
-        })
+            res.redirect('back')
+        }else{
+            db.query('SELECT email FROM users WHERE email = ?', [email], async(err, result) => {
+                if (err) {
+                    console.log(err)
+                } else if (result.length > 0) {
+                    req.session.message = {
+                        type: 'error',
+                        message: 'Email is already in use!'
+                    }
+                    res.redirect('register')
+                } else {
+                    let hashedPassword = await bcrypt.hash(password, 10);
+                    db.query('INSERT INTO users SET ?', { name: name, username: username, email: email, password: hashedPassword }, (err, result) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            // console.log(result)
+                            req.session.message = {
+                                type: 'success',
+                                message: 'Successfully registered an account!'
+                            }
+                            res.redirect('login')
+                        }
+                    })
+                }
+            })
+        }
+        
     })
     
     app.post("/login", (req, res) => {
@@ -306,7 +315,7 @@ module.exports = function(app) {
                 const correctPass = await bcrypt.compare(password, result[0].password);
                 if (correctPass) {
                     req.session.user = result
-                    console.log(result)
+                    // console.log(result)
                     req.session.message = {
                         type: 'success',
                         message: 'Welcome, ' + result[0].name + '!'
