@@ -8,21 +8,9 @@ const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv')
 dotenv.config({ path: "./.env" })
 const session = require("express-session");
+var MySQLStore = require('express-mysql-session')(session);
 
 app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(session({
-    secret: 'secret',
-    cookie: { maxAge: Date.now() + (30 * 86400 * 1000) },
-    resave: false,
-    saveUninitialized: false
-}))
-
-app.use(function(req, res, next) {
-    res.locals.message = req.session.message;
-    delete req.session.message;
-    next();
-})
 
 const db = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -30,6 +18,9 @@ const db = mysql.createPool({
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE
 })
+
+var sessionStore = new MySQLStore({}/* session store options */, db);
+
 
 //connect to database
 db.getConnection((err) => {
@@ -39,6 +30,20 @@ db.getConnection((err) => {
         console.log("Connected to database");
     }
 });
+
+app.use(session({
+    secret: 'secret',
+    cookie: { maxAge: Date.now() + (30 * 86400 * 1000) },
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+}))
+
+app.use(function(req, res, next) {
+    res.locals.message = req.session.message;
+    delete req.session.message;
+    next();
+})
 
 global.db = db
 
