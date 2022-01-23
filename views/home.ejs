@@ -4,7 +4,11 @@
 
 <body>
     <%- include('logged-nav')%>
-
+    <% if (message) { %>
+        <div id="alert" class="alert closebtn alert-<%= message.type %>">
+            <strong> <%= message.message %> </strong>
+        </div>
+        <% } %>
     <div class="container is-large home-page">
         <div class="columns">
             <div class="column">

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header') %>
+
+<body>
+    <%- include('logged-nav')%>
+    <div class="login-container">
+        <% if (message) { %>
+        <div id="alert" class="alert closebtn alert-<%= message.type %>">
+            <strong> <%= message.message %> </strong>
+        </div>
+        <% } %>
+        <h2>EDIT MY ACCOUNT</h2>
+
+        <form class="edit-account-form" method="POST" action="/edit-account">
+            <div class="account-input">
+                <input type="text" id="name" name="name" value="<%=user.name%>"
+                    required="required" >
+                <span>Name</span>
+            </div>
+            <div class="account-input">
+                <input type="text" id="username" name="username"  value="<%=user.username%>"
+                    required="required">
+                <span>Username</span>
+            </div>
+            <div class="account-input">
+                <input type="text" id="email" name="email" value="<%=user.email%>"
+                    required="required">
+                <span>Email</span>
+            </div>
+            <div class="account-input">
+                <input type="password" id="password" name="password" required="required">
+                <span>Password</span>
+            </div>
+            <input type="hidden" name="id" value="<%=user.id%>">
+            <button type="submit">Finish</button>
+        </form>
+    </div>
+    <%- include('logged-footer') %>
+
+</body>
+
+</html>

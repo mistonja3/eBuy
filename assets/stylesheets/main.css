@@ -227,7 +227,7 @@ img {
 }
 
 .alert {
-    margin: 20px 0;
+    /* margin: 20px 0; */
     padding: 10px;
     text-align: center;
     color: #fff;
@@ -560,6 +560,7 @@ img {
     position: absolute;
     top: 30px;
     left: 50%;
+    width: 150px;
     transform: translateX(-50%);
     background-color: #fff;
     z-index: 1;
@@ -567,6 +568,16 @@ img {
     padding: 20px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     opacity: 0;
+}
+
+.hidden-logout a{
+    transition: 0.3s;
+}
+.hidden-logout p:first-child{
+    margin-bottom: 10px;
+}
+.hidden-logout a:hover{
+    color: #FCB900;
 }
 
 .support{
@@ -646,6 +657,46 @@ img {
     background: #fff;
     font-size: 1.1rem;
     /* margin: 0 */
+}
+
+.edit-account-form{
+    padding: 20px 40px;
+}
+
+.account-input{
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.account-input input{
+    width: 100%;
+    padding: 5px 0;
+    margin: 15px 0;
+    border: none;
+    border-bottom: 2px solid #7069f0;
+    border-radius: 0;
+    outline: none;
+    font-size: 1rem;
+    resize: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.account-input span{
+    position: absolute;
+    left: 0;
+    margin: 15px 0;
+    pointer-events: none;
+    transition: 0.3s;
+    color: #566;
+}
+
+
+.account-input input:focus + span,
+.account-input input:valid + span{
+    transform: translateY(-20px);
+    font-size: 12px;
 }
 
 @media screen and (max-width: 480px) {

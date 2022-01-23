@@ -21,10 +21,15 @@
             <a href="/support">
                 <li>Support</li>
             </a>
-            <li class="login-hover">Hi,
+            <li class="login-hover">
+                Account
+                <div class="hidden-logout">
+                    <p><a href="/edit-account?id=<%=id%>">My Account</a></p>
+                    <p><a href="/logout">Logout</a></p>
+                </div>
 
-                <%= name%>
-                <p class="hidden-logout"><a href="/logout">Logout</a></p>
+
+
             </li>
             <!-- </a> -->
             <a href="/cart">
@@ -47,7 +52,7 @@
                     <li class="side-menu-links"><a href="/">Home</a></li>
                     <li class="side-menu-links"><a href="/products">Products</a></li>
                     <li class="side-menu-links"><a href="/support">Support</a></li>
-                    <li class="side-menu-links"><a href="/home">Hi, <%= name%></a></li>
+                    <li class="side-menu-links"><a href="/edit-account?id=<%=id%>">My Account</a></li>
                     <li class="side-menu-links"><a href="/cart">Shopping Cart</a></li>
                     <li class="side-menu-links"><a href="/logout">Logout</a></li>
 

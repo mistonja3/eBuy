@@ -6,12 +6,13 @@
     <%- include('logged-nav')%>
 
     <div class="container is-large product-details">
-        <form method="POST">
-            <% if (message) { %>
+        <% if (message) { %>
             <div id="alert" class="alert closebtn alert-<%= message.type %>">
                 <strong> <%= message.message %> </strong>
             </div>
             <% } %>
+        <form method="POST">
+            
             <div class="columns">
                 <div class="column">
                     <div class="img-container">

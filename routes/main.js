@@ -20,12 +20,11 @@ module.exports = function(app) {
     app.get("/home", (req, res) => {
         let user = req.session.user
         if (user) {
-            // console.log(req.session)
             db.query('SELECT * FROM products', (err, result) => {
                 if (err) {
                     console.log(err)
                 } else {
-                    res.render('home', { title: 'eBuy - Home Page', name: user[0].name, availableProducts: result })
+                    res.render('home', { title: 'eBuy - Home Page', availableProducts: result, id: user[0].id })
                 }
             })
         } else {
@@ -48,7 +47,7 @@ module.exports = function(app) {
                         }
                         res.redirect('/');
                     } else {
-                        res.render("logged-products", { title: 'eBuy - Products', name: user[0].name, availableProducts: result })
+                        res.render("logged-products", { title: 'eBuy - Products', availableProducts: result, id: user[0].id })
                     }
                 }
             })
@@ -74,7 +73,7 @@ module.exports = function(app) {
     app.get("/support", (req, res) => {
         let user = req.session.user
         if (user) {
-            res.render("logged-support", { title: 'eBuy - Support', name: user[0].name })
+            res.render("logged-support", { title: 'eBuy - Support', id: user[0].id })
         } else {
             res.render("support", { title: 'eBuy - Support' })
         }
@@ -87,7 +86,7 @@ module.exports = function(app) {
                 if (err) {
                     console.log(err)
                 } else if (result.length != 0) {
-                    res.render("logged-products-details", { title: 'eBuy - Product Name', name: user[0].name, product: result[0] })
+                    res.render("logged-products-details", { title: 'eBuy - Product Name', product: result[0], id: user[0].id })
                 }
             })
         } else {
@@ -146,9 +145,9 @@ module.exports = function(app) {
                     console.log(err)
                 } else {
                     if (result.length == 0) {
-                        res.render("logged-cart-empty", { title: 'eBuy - Shopping Cart', name: user[0].name, availableProducts: result, product: result[0] })
+                        res.render("logged-cart-empty", { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0], id: user[0].id })
                     } else {
-                        res.render("logged-cart", { title: 'eBuy - Shopping Cart', name: user[0].name, availableProducts: result, product: result[0] })
+                        res.render("logged-cart", { title: 'eBuy - Shopping Cart', availableProducts: result, product: result[0], id: user[0].id })
                     }
                 }
             })
@@ -260,6 +259,44 @@ module.exports = function(app) {
                 res.redirect('/')
             })
         }
+    })
+
+    app.get("/edit-account", (req,res)=>{
+
+        db.query("SELECT * FROM users WHERE id = ?", req.query.id, (err, result)=>{
+            if(err){
+                console.log(err)
+            }else{
+                res.render("edit-account", {title: "Edit My Account", user: result[0], id: result[0].id})
+            }
+        })
+    })
+
+    app.post("/edit-account", async(req, res)=>{
+        const{name, username, email, password} = req.body
+        if(name == "" || username == "" || email == "" || password == ""){
+            req.session.message = {
+                type: 'error',
+                message: 'Please fill in all the fields.'
+            }
+            res.redirect('back')
+        }else{
+            // let newDetails = [req.body, req.query.id]
+            let hashedPassword = await bcrypt.hash(password, 10);
+            let newRec = [{ name: name, username: username, email: email, password: hashedPassword }, req.body.id]
+            db.query("UPDATE users SET ? WHERE id = ?", newRec, (err, result)=>{
+                if(err){
+                    console.log(err)
+                }else{
+                    req.session.message = {
+                        type: 'success',
+                        message: 'Successfully edited your account!'
+                    }
+                    res.redirect("home")
+                }
+            })
+        }
+        
     })
 
     app.post("/register", (req, res) => {
